@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jaipur Bazaar</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f8f5;
+      color: #222;
+    }
+
+    header {
+      background: #16834a;
+      color: white;
+      padding: 22px 16px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    header p {
+      margin-bottom: 0;
+    }
+
+    main {
+      max-width: 650px;
+      margin: 25px auto;
+      padding: 16px;
+    }
+
+    .search {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    h2 {
+      color: #16834a;
+      margin-top: 28px;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .category {
+      background: white;
+      padding: 18px 10px;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid #e0e8e0;
+    }
+
+    .sell {
+      display: block;
+      width: 100%;
+      margin-top: 25px;
+      padding: 15px;
+      background: #16834a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Jaipur Bazaar</h1>
+    <p>Buy Local • Sell Easy • Jaipur First</p>
+  </header>
+
+  <main>
+    <input
+      class="search"
+      type="search"
+      placeholder="Search products in Jaipur..."
+    >
+
+    <h2>Browse Categories</h2>
+
+    <div class="categories">
+      <div class="category">📱 Mobiles</div>
+      <div class="category">👕 Clothes</div>
+      <div class="category">🪑 Furniture</div>
+      <div class="category">💻 Electronics</div>
+      <div class="category">🚲 Bicycles</div>
+      <div class="category">🏠 Home Items</div>
+    </div>
+
+    <button class="sell">+ Sell Your Product</button>
+
+    <h2>Latest Products</h2>
+    <p>Products from Jaipur sellers will appear here.</p>
+  </main>
+
+  <footer>
+    © 2026 Jaipur Bazaar
+  </footer>
+
+</body>
+</html>
