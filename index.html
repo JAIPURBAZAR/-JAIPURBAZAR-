@@ -1,124 +1,347 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jaipur Bazaar</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jaipur Bazaar</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f8f5;
-      color: #222;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    header {
-      background: #16834a;
-      color: white;
-      padding: 22px 16px;
-      text-align: center;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f8f5;
+  color: #222;
+}
 
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
+header {
+  background: #16834a;
+  color: white;
+  padding: 22px 16px;
+  text-align: center;
+}
 
-    header p {
-      margin-bottom: 0;
-    }
+header h1 {
+  margin: 0;
+  font-size: 28px;
+}
 
-    main {
-      max-width: 650px;
-      margin: 25px auto;
-      padding: 16px;
-    }
+main {
+  max-width: 650px;
+  margin: 25px auto;
+  padding: 16px;
+}
 
-    .search {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 16px;
-    }
+.search, input, select, textarea {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+}
 
-    h2 {
-      color: #16834a;
-      margin-top: 28px;
-    }
+h2 {
+  color: #16834a;
+  margin-top: 28px;
+}
 
-    .categories {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
+.categories {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
 
-    .category {
-      background: white;
-      padding: 18px 10px;
-      border-radius: 10px;
-      text-align: center;
-      border: 1px solid #e0e8e0;
-    }
+.category {
+  background: white;
+  padding: 18px 10px;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid #e0e8e0;
+  cursor: pointer;
+}
 
-    .sell {
-      display: block;
-      width: 100%;
-      margin-top: 25px;
-      padding: 15px;
-      background: #16834a;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 17px;
-      font-weight: bold;
-    }
+.sell {
+  display: block;
+  width: 100%;
+  margin-top: 25px;
+  padding: 17px;
+  background: #16834a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #666;
-    }
-  </style>
+#sellForm {
+  display: none;
+  background: white;
+  padding: 18px;
+  margin-top: 20px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.submit {
+  width: 100%;
+  padding: 15px;
+  background: #16834a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.product {
+  background: white;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.product img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.product h3 {
+  margin-bottom: 5px;
+}
+
+.price {
+  color: #16834a;
+  font-size: 21px;
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+</style>
 </head>
+
 <body>
 
-  <header>
-    <h1>Jaipur Bazaar</h1>
-    <p>Buy Local • Sell Easy • Jaipur First</p>
-  </header>
+<header>
+  <h1>Jaipur Bazaar</h1>
+  <p>Buy Local • Sell Easy • Jaipur First</p>
+</header>
 
-  <main>
-    <input
-      class="search"
-      type="search"
-      placeholder="Search products in Jaipur..."
-    >
+<main>
 
-    <h2>Browse Categories</h2>
+<input
+  class="search"
+  id="search"
+  type="search"
+  placeholder="Search products in Jaipur..."
+>
 
-    <div class="categories">
-      <div class="category">📱 Mobiles</div>
-      <div class="category">👕 Clothes</div>
-      <div class="category">🪑 Furniture</div>
-      <div class="category">💻 Electronics</div>
-      <div class="category">🚲 Bicycles</div>
-      <div class="category">🏠 Home Items</div>
-    </div>
+<h2>Browse Categories</h2>
 
-    <button class="sell">+ Sell Your Product</button>
+<div class="categories">
+  <div class="category" onclick="filterCategory('Mobiles')">📱 Mobiles</div>
+  <div class="category" onclick="filterCategory('Clothes')">👕 Clothes</div>
+  <div class="category" onclick="filterCategory('Furniture')">🪑 Furniture</div>
+  <div class="category" onclick="filterCategory('Electronics')">💻 Electronics</div>
+  <div class="category" onclick="filterCategory('Bicycles')">🚲 Bicycles</div>
+  <div class="category" onclick="filterCategory('Home Items')">🏠 Home Items</div>
+</div>
 
-    <h2>Latest Products</h2>
-    <p>Products from Jaipur sellers will appear here.</p>
-  </main>
+<button class="sell" onclick="toggleForm()">
+  + Sell Your Product
+</button>
 
-  <footer>
-    © 2026 Jaipur Bazaar
-  </footer>
+<div id="sellForm">
+
+<h2>Sell Your Product</h2>
+
+<form id="productForm">
+
+<input id="productName"
+  type="text"
+  placeholder="Product Name"
+  required>
+
+<input id="productPrice"
+  type="number"
+  placeholder="Price in Rupees"
+  min="1"
+  required>
+
+<select id="productCategory" required>
+  <option value="">Select Category</option>
+  <option>Mobiles</option>
+  <option>Clothes</option>
+  <option>Furniture</option>
+  <option>Electronics</option>
+  <option>Bicycles</option>
+  <option>Home Items</option>
+</select>
+
+<input id="sellerPhone"
+  type="tel"
+  placeholder="Your Mobile Number"
+  pattern="[0-9]{10}"
+  maxlength="10"
+  required>
+
+<input id="productImage"
+  type="url"
+  placeholder="Product Photo URL (optional)">
+
+<textarea id="productDescription"
+  placeholder="Product Description"></textarea>
+
+<button class="submit" type="submit">
+  Add Product
+</button>
+
+</form>
+</div>
+
+<h2>Latest Products</h2>
+
+<div id="products">
+  <p>Products from Jaipur sellers will appear here.</p>
+</div>
+
+</main>
+
+<footer>
+  © 2026 Jaipur Bazaar
+</footer>
+
+<script>
+
+let products = JSON.parse(
+  localStorage.getItem("jaipurProducts") || "[]"
+);
+
+function toggleForm() {
+  const form = document.getElementById("sellForm");
+
+  form.style.display =
+    form.style.display === "block" ? "none" : "block";
+
+  if (form.style.display === "block") {
+    form.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+document.getElementById("productForm")
+.addEventListener("submit", function(e) {
+
+  e.preventDefault();
+
+  const product = {
+    name: document.getElementById("productName").value,
+    price: document.getElementById("productPrice").value,
+    category: document.getElementById("productCategory").value,
+    phone: document.getElementById("sellerPhone").value,
+    image: document.getElementById("productImage").value,
+    description: document.getElementById("productDescription").value
+  };
+
+  products.unshift(product);
+
+  localStorage.setItem(
+    "jaipurProducts",
+    JSON.stringify(products)
+  );
+
+  this.reset();
+
+  document.getElementById("sellForm").style.display = "none";
+
+  renderProducts();
+
+  alert("Product added successfully!");
+
+});
+
+function renderProducts(list = products) {
+
+  const container = document.getElementById("products");
+
+  container.innerHTML = "";
+
+  if (list.length === 0) {
+    container.innerHTML = "<p>No products found.</p>";
+    return;
+  }
+
+  list.forEach(product => {
+
+    const card = document.createElement("div");
+    card.className = "product";
+
+    if (product.image) {
+      const img = document.createElement("img");
+      img.src = product.image;
+      img.alt = product.name;
+      img.onerror = () => img.remove();
+      card.appendChild(img);
+    }
+
+    const name = document.createElement("h3");
+    name.textContent = product.name;
+
+    const price = document.createElement("p");
+    price.className = "price";
+    price.textContent = "₹" + product.price;
+
+    const category = document.createElement("p");
+    category.textContent = "Category: " + product.category;
+
+    const description = document.createElement("p");
+    description.textContent = product.description;
+
+    const phone = document.createElement("p");
+    phone.textContent = "Seller: " + product.phone;
+
+    card.append(name, price, category, description, phone);
+    container.appendChild(card);
+
+  });
+}
+
+function filterCategory(category) {
+  document.getElementById("search").value = "";
+  renderProducts(
+    products.filter(p => p.category === category)
+  );
+}
+
+document.getElementById("search")
+.addEventListener("input", function() {
+
+  const query = this.value.toLowerCase();
+
+  renderProducts(
+    products.filter(p =>
+      p.name.toLowerCase().includes(query) ||
+      p.category.toLowerCase().includes(query)
+    )
+  );
+
+});
+
+renderProducts();
+
+</script>
 
 </body>
 </html>
+.
