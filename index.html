@@ -1,347 +1,226 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jaipur Bazaar</title>
-
+<title>Jaipur Bazar - Buy & Sell</title>
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f8f5;
-  color: #222;
-}
-
-header {
-  background: #16834a;
-  color: white;
-  padding: 22px 16px;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 28px;
-}
-
-main {
-  max-width: 650px;
-  margin: 25px auto;
-  padding: 16px;
-}
-
-.search, input, select, textarea {
-  width: 100%;
-  padding: 14px;
-  margin: 8px 0;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 16px;
-}
-
-h2 {
-  color: #16834a;
-  margin-top: 28px;
-}
-
-.categories {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.category {
-  background: white;
-  padding: 18px 10px;
-  border-radius: 10px;
-  text-align: center;
-  border: 1px solid #e0e8e0;
-  cursor: pointer;
-}
-
-.sell {
-  display: block;
-  width: 100%;
-  margin-top: 25px;
-  padding: 17px;
-  background: #16834a;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#sellForm {
-  display: none;
-  background: white;
-  padding: 18px;
-  margin-top: 20px;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-}
-
-.submit {
-  width: 100%;
-  padding: 15px;
-  background: #16834a;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 17px;
-  cursor: pointer;
-}
-
-.product {
-  background: white;
-  padding: 15px;
-  margin-top: 15px;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-}
-
-.product img {
-  width: 100%;
-  max-height: 220px;
-  object-fit: contain;
-  border-radius: 8px;
-}
-
-.product h3 {
-  margin-bottom: 5px;
-}
-
-.price {
-  color: #16834a;
-  font-size: 21px;
-  font-weight: bold;
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  color: #666;
-}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f5f5;color:#222}
+header{background:#16834a;color:white;padding:16px;text-align:center}
+header h1{margin:0;font-size:27px}
+header p{margin:7px 0 0}
+.container{max-width:950px;margin:auto;padding:15px}
+.search{width:100%;padding:14px;border:1px solid #ccc;border-radius:9px;font-size:16px;margin:10px 0}
+h2{color:#16834a}
+.categories{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.category{padding:15px 5px;background:white;border:1px solid #ddd;border-radius:10px;text-align:center;cursor:pointer}
+.category.active{background:#16834a;color:white}
+.sell{width:100%;padding:16px;background:#16834a;color:white;border:0;border-radius:9px;font-size:18px;font-weight:bold;margin:20px 0;cursor:pointer}
+.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:white;border-radius:10px;overflow:hidden;border:1px solid #ddd}
+.card img{width:100%;height:150px;object-fit:cover;background:#eee}
+.details{padding:11px}
+.price{font-size:20px;font-weight:bold;margin:5px 0}
+.name{font-size:16px;margin:7px 0}
+.location{color:#777;font-size:13px}
+.contact{display:block;text-align:center;background:#16834a;color:white;padding:10px;text-decoration:none;border-radius:7px;margin-top:10px}
+.delete{border:0;background:#eee;padding:8px;border-radius:6px;margin-top:7px}
+.modal{display:none;position:fixed;inset:0;background:#0009;overflow:auto;padding:15px;z-index:5}
+.modal-box{background:white;max-width:500px;margin:25px auto;padding:20px;border-radius:12px}
+.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:12px;margin:7px 0 13px;border:1px solid #ccc;border-radius:7px;font-size:15px}
+.modal-box button{padding:13px;border:0;border-radius:7px;cursor:pointer}
+.submit{background:#16834a;color:white;width:100%;font-size:16px}
+.close{background:#eee;float:right}
+.empty{text-align:center;padding:25px;color:#777;grid-column:1/-1}
+footer{text-align:center;padding:25px;color:#777}
+@media(min-width:650px){.products{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
-
 <body>
 
 <header>
-  <h1>Jaipur Bazaar</h1>
-  <p>Buy Local • Sell Easy • Jaipur First</p>
+<h1>🛍️ Jaipur Bazar</h1>
+<p>Buy Local • Sell Easy • Jaipur First</p>
 </header>
 
-<main>
+<div class="container">
 
-<input
-  class="search"
-  id="search"
-  type="search"
-  placeholder="Search products in Jaipur..."
->
+<input id="search" class="search" type="search"
+placeholder="🔍 Search mobiles, clothes, furniture..."
+oninput="renderProducts()">
 
 <h2>Browse Categories</h2>
-
-<div class="categories">
-  <div class="category" onclick="filterCategory('Mobiles')">📱 Mobiles</div>
-  <div class="category" onclick="filterCategory('Clothes')">👕 Clothes</div>
-  <div class="category" onclick="filterCategory('Furniture')">🪑 Furniture</div>
-  <div class="category" onclick="filterCategory('Electronics')">💻 Electronics</div>
-  <div class="category" onclick="filterCategory('Bicycles')">🚲 Bicycles</div>
-  <div class="category" onclick="filterCategory('Home Items')">🏠 Home Items</div>
+<div class="categories" id="categories">
+<div class="category active" onclick="chooseCategory('All',this)">🛍️ All</div>
+<div class="category" onclick="chooseCategory('Mobiles',this)">📱 Mobiles</div>
+<div class="category" onclick="chooseCategory('Clothes',this)">👕 Clothes</div>
+<div class="category" onclick="chooseCategory('Furniture',this)">🪑 Furniture</div>
+<div class="category" onclick="chooseCategory('Electronics',this)">💻 Electronics</div>
+<div class="category" onclick="chooseCategory('Bicycles',this)">🚲 Bicycles</div>
+<div class="category" onclick="chooseCategory('Home Items',this)">🏠 Home Items</div>
 </div>
 
-<button class="sell" onclick="toggleForm()">
-  + Sell Your Product
-</button>
+<button class="sell" onclick="openForm()">+ SELL YOUR PRODUCT</button>
 
-<div id="sellForm">
+<h2>Latest Products</h2>
+<div id="products" class="products"></div>
 
+</div>
+
+<footer>© 2026 Jaipur Bazar | Jaipur, Rajasthan</footer>
+
+<div class="modal" id="modal">
+<div class="modal-box">
+<button class="close" onclick="closeForm()">✕ Close</button>
 <h2>Sell Your Product</h2>
 
 <form id="productForm">
+<label>Product Name</label>
+<input id="pname" required placeholder="Example: Samsung Mobile">
 
-<input id="productName"
-  type="text"
-  placeholder="Product Name"
-  required>
+<label>Price (₹)</label>
+<input id="price" type="number" min="1" required placeholder="Enter price">
 
-<input id="productPrice"
-  type="number"
-  placeholder="Price in Rupees"
-  min="1"
-  required>
-
-<select id="productCategory" required>
-  <option value="">Select Category</option>
-  <option>Mobiles</option>
-  <option>Clothes</option>
-  <option>Furniture</option>
-  <option>Electronics</option>
-  <option>Bicycles</option>
-  <option>Home Items</option>
+<label>Category</label>
+<select id="category" required>
+<option value="">Select Category</option>
+<option>Mobiles</option>
+<option>Clothes</option>
+<option>Furniture</option>
+<option>Electronics</option>
+<option>Bicycles</option>
+<option>Home Items</option>
+<option>Other</option>
 </select>
 
-<input id="sellerPhone"
-  type="tel"
-  placeholder="Your Mobile Number"
-  pattern="[0-9]{10}"
-  maxlength="10"
-  required>
+<label>Product Photo</label>
+<input id="photo" type="file" accept="image/*" required>
 
-<input id="productImage"
-  type="url"
-  placeholder="Product Photo URL (optional)">
+<label>Product Description</label>
+<textarea id="description" rows="3" placeholder="Product details"></textarea>
 
-<textarea id="productDescription"
-  placeholder="Product Description"></textarea>
+<label>Your Jaipur Location</label>
+<input id="location" required placeholder="Example: Mansarovar, Jaipur">
 
-<button class="submit" type="submit">
-  Add Product
-</button>
+<label>WhatsApp Number (10 digits)</label>
+<input id="phone" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required placeholder="10 digit mobile number">
 
+<button class="submit" type="submit">POST YOUR AD</button>
 </form>
 </div>
-
-<h2>Latest Products</h2>
-
-<div id="products">
-  <p>Products from Jaipur sellers will appear here.</p>
 </div>
 
-</main>
-
-<footer>
-  © 2026 Jaipur Bazaar
-</footer>
-
 <script>
+let selectedCategory = "All";
+let products = [];
 
-let products = JSON.parse(
-  localStorage.getItem("jaipurProducts") || "[]"
-);
-
-function toggleForm() {
-  const form = document.getElementById("sellForm");
-
-  form.style.display =
-    form.style.display === "block" ? "none" : "block";
-
-  if (form.style.display === "block") {
-    form.scrollIntoView({ behavior: "smooth" });
-  }
+try {
+ products = JSON.parse(localStorage.getItem("jaipurProducts")) || [];
+} catch(e) {
+ products = [];
 }
 
-document.getElementById("productForm")
-.addEventListener("submit", function(e) {
+function saveProducts(){
+ try {
+  localStorage.setItem("jaipurProducts",JSON.stringify(products));
+ } catch(e) {
+  alert("Storage full. Please use a smaller product photo.");
+ }
+}
 
-  e.preventDefault();
+function openForm(){
+ document.getElementById("modal").style.display="block";
+}
+function closeForm(){
+ document.getElementById("modal").style.display="none";
+}
 
-  const product = {
-    name: document.getElementById("productName").value,
-    price: document.getElementById("productPrice").value,
-    category: document.getElementById("productCategory").value,
-    phone: document.getElementById("sellerPhone").value,
-    image: document.getElementById("productImage").value,
-    description: document.getElementById("productDescription").value
+function chooseCategory(category,element){
+ selectedCategory=category;
+ document.querySelectorAll(".category").forEach(x=>x.classList.remove("active"));
+ element.classList.add("active");
+ renderProducts();
+}
+
+function safe(value){
+ return String(value ?? "").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+document.getElementById("productForm").addEventListener("submit",function(e){
+ e.preventDefault();
+
+ const file=document.getElementById("photo").files[0];
+ if(!file) return alert("Please select a photo.");
+ if(file.size>1500000) return alert("Photo should be smaller than 1.5 MB.");
+
+ const reader=new FileReader();
+ reader.onload=function(){
+  const product={
+   id:Date.now(),
+   name:document.getElementById("pname").value.trim(),
+   price:Number(document.getElementById("price").value),
+   category:document.getElementById("category").value,
+   photo:reader.result,
+   description:document.getElementById("description").value.trim(),
+   location:document.getElementById("location").value.trim(),
+   phone:document.getElementById("phone").value.trim()
   };
 
   products.unshift(product);
-
-  localStorage.setItem(
-    "jaipurProducts",
-    JSON.stringify(products)
-  );
-
-  this.reset();
-
-  document.getElementById("sellForm").style.display = "none";
-
+  saveProducts();
   renderProducts();
-
-  alert("Product added successfully!");
-
+  document.getElementById("productForm").reset();
+  closeForm();
+  alert("Your product ad has been posted!");
+ };
+ reader.readAsDataURL(file);
 });
 
-function renderProducts(list = products) {
+function renderProducts(){
+ const search=document.getElementById("search").value.toLowerCase();
+ const area=document.getElementById("products");
 
-  const container = document.getElementById("products");
+ const filtered=products.filter(p=>
+  (selectedCategory==="All" || p.category===selectedCategory) &&
+  (p.name+" "+p.category+" "+p.location).toLowerCase().includes(search)
+ );
 
-  container.innerHTML = "";
+ if(filtered.length===0){
+  area.innerHTML='<div class="empty">No products found. Be the first to sell! 😊</div>';
+  return;
+ }
 
-  if (list.length === 0) {
-    container.innerHTML = "<p>No products found.</p>";
-    return;
-  }
-
-  list.forEach(product => {
-
-    const card = document.createElement("div");
-    card.className = "product";
-
-    if (product.image) {
-      const img = document.createElement("img");
-      img.src = product.image;
-      img.alt = product.name;
-      img.onerror = () => img.remove();
-      card.appendChild(img);
-    }
-
-    const name = document.createElement("h3");
-    name.textContent = product.name;
-
-    const price = document.createElement("p");
-    price.className = "price";
-    price.textContent = "₹" + product.price;
-
-    const category = document.createElement("p");
-    category.textContent = "Category: " + product.category;
-
-    const description = document.createElement("p");
-    description.textContent = product.description;
-
-    const phone = document.createElement("p");
-    phone.textContent = "Seller: " + product.phone;
-
-    card.append(name, price, category, description, phone);
-    container.appendChild(card);
-
-  });
+ area.innerHTML=filtered.map(p=>`
+  <div class="card">
+   <img src="${p.photo}" alt="${safe(p.name)}">
+   <div class="details">
+    <div class="price">₹${Number(p.price).toLocaleString("en-IN")}</div>
+    <div class="name">${safe(p.name)}</div>
+    <div>${safe(p.category)}</div>
+    <div class="location">📍 ${safe(p.location)}</div>
+    <a class="contact" target="_blank" rel="noopener"
+     href="https://wa.me/91${safe(p.phone)}?text=${encodeURIComponent("Namaste, I am interested in "+p.name)}">
+     WhatsApp Seller
+    </a>
+    <button class="delete" onclick="deleteProduct(${Number(p.id)})">Delete Ad</button>
+   </div>
+  </div>
+ `).join("");
 }
 
-function filterCategory(category) {
-  document.getElementById("search").value = "";
-  renderProducts(
-    products.filter(p => p.category === category)
-  );
+function deleteProduct(id){
+ if(confirm("Are you sure you want to delete this ad?")){
+  products=products.filter(p=>p.id!==id);
+  saveProducts();
+  renderProducts();
+ }
 }
-
-document.getElementById("search")
-.addEventListener("input", function() {
-
-  const query = this.value.toLowerCase();
-
-  renderProducts(
-    products.filter(p =>
-      p.name.toLowerCase().includes(query) ||
-      p.category.toLowerCase().includes(query)
-    )
-  );
-
-});
 
 renderProducts();
-
 </script>
-
 </body>
 </html>
-.
