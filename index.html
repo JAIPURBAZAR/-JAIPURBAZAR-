@@ -4,223 +4,291 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jaipur Bazar - Buy & Sell</title>
+<title>Jaipur Bazar | Buy & Sell</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f5f5;color:#222}
-header{background:#16834a;color:white;padding:16px;text-align:center}
-header h1{margin:0;font-size:27px}
-header p{margin:7px 0 0}
-.container{max-width:950px;margin:auto;padding:15px}
-.search{width:100%;padding:14px;border:1px solid #ccc;border-radius:9px;font-size:16px;margin:10px 0}
-h2{color:#16834a}
-.categories{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.category{padding:15px 5px;background:white;border:1px solid #ddd;border-radius:10px;text-align:center;cursor:pointer}
-.category.active{background:#16834a;color:white}
-.sell{width:100%;padding:16px;background:#16834a;color:white;border:0;border-radius:9px;font-size:18px;font-weight:bold;margin:20px 0;cursor:pointer}
-.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{background:white;border-radius:10px;overflow:hidden;border:1px solid #ddd}
-.card img{width:100%;height:150px;object-fit:cover;background:#eee}
-.details{padding:11px}
-.price{font-size:20px;font-weight:bold;margin:5px 0}
-.name{font-size:16px;margin:7px 0}
-.location{color:#777;font-size:13px}
-.contact{display:block;text-align:center;background:#16834a;color:white;padding:10px;text-decoration:none;border-radius:7px;margin-top:10px}
-.delete{border:0;background:#eee;padding:8px;border-radius:6px;margin-top:7px}
-.modal{display:none;position:fixed;inset:0;background:#0009;overflow:auto;padding:15px;z-index:5}
-.modal-box{background:white;max-width:500px;margin:25px auto;padding:20px;border-radius:12px}
-.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:12px;margin:7px 0 13px;border:1px solid #ccc;border-radius:7px;font-size:15px}
-.modal-box button{padding:13px;border:0;border-radius:7px;cursor:pointer}
-.submit{background:#16834a;color:white;width:100%;font-size:16px}
-.close{background:#eee;float:right}
-.empty{text-align:center;padding:25px;color:#777;grid-column:1/-1}
-footer{text-align:center;padding:25px;color:#777}
-@media(min-width:650px){.products{grid-template-columns:repeat(3,1fr)}}
+body{margin:0;font-family:Arial,sans-serif;background:#f5f7f7;color:#173b3b}
+header{background:#fff;padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;box-shadow:0 2px 8px #ddd;position:sticky;top:0;z-index:5}
+.logo{font-size:25px;font-weight:bold;color:#087e75}
+button{border:0;border-radius:7px;padding:11px 16px;background:#087e75;color:white;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.5}
+.login{background:#173b3b}
+.hero{background:#d9f1ed;padding:30px 5%;text-align:center}
+.hero h1{margin:5px;font-size:30px}
+.search{width:min(650px,100%);padding:14px;border:1px solid #aaa;border-radius:8px;margin-top:15px;font-size:16px}
+main{max-width:1150px;margin:25px auto;padding:0 15px}
+.categories{display:flex;gap:9px;overflow:auto;padding:10px 0}
+.categories button{white-space:nowrap;background:#fff;color:#173b3b;border:1px solid #ddd}
+.categories button.active{background:#087e75;color:white}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.card{background:white;border:1px solid #e4e4e4;border-radius:10px;overflow:hidden}
+.card img{width:100%;height:165px;object-fit:cover;background:#eee}
+.cardbody{padding:13px}
+.price{font-size:21px;font-weight:bold;margin:7px 0}
+.muted{font-size:13px;color:#667}
+.card h3{margin:5px 0}
+.card button{margin-top:9px}
+.modal{display:none;position:fixed;inset:0;background:#0009;z-index:10;overflow:auto;padding:20px}
+.modalbox{background:white;max-width:500px;margin:20px auto;padding:22px;border-radius:12px}
+input,select,textarea{width:100%;padding:12px;margin:7px 0 13px;border:1px solid #bbb;border-radius:7px;font-size:15px}
+label{font-weight:bold;font-size:14px}
+.close{float:right;background:#eee;color:#333}
+.status{padding:12px;margin:12px 0;background:#e7f5f2;border-radius:8px}
+footer{text-align:center;padding:25px;color:#667}
+@media(max-width:500px){.hero h1{font-size:24px}header{position:static}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.card img{height:125px}.cardbody{padding:9px}}
 </style>
 </head>
 <body>
 
 <header>
-<h1>🛍️ Jaipur Bazar</h1>
-<p>Buy Local • Sell Easy • Jaipur First</p>
+  <div class="logo">🏪 JAIPUR BAZAR</div>
+  <div>
+    <button class="login" id="loginBtn">Google Login</button>
+    <button id="sellBtn">+ Sell</button>
+  </div>
 </header>
 
-<div class="container">
+<section class="hero">
+  <h1>Jaipur में खरीदें और बेचें</h1>
+  <p>अपने आसपास की बेहतरीन Deals खोजें</p>
+  <input class="search" id="search" placeholder="क्या ढूँढ रहे हैं? जैसे Mobile, Bike...">
+</section>
 
-<input id="search" class="search" type="search"
-placeholder="🔍 Search mobiles, clothes, furniture..."
-oninput="renderProducts()">
+<main>
+  <div class="sectionhead">
+    <h2>Categories</h2>
+  </div>
+  <div class="categories" id="categories">
+    <button class="active" data-cat="All">All</button>
+    <button data-cat="Mobiles">Mobiles</button>
+    <button data-cat="Electronics">Electronics</button>
+    <button data-cat="Vehicles">Vehicles</button>
+    <button data-cat="Furniture">Furniture</button>
+    <button data-cat="Fashion">Fashion</button>
+    <button data-cat="Property">Property</button>
+    <button data-cat="Other">Other</button>
+  </div>
 
-<h2>Browse Categories</h2>
-<div class="categories" id="categories">
-<div class="category active" onclick="chooseCategory('All',this)">🛍️ All</div>
-<div class="category" onclick="chooseCategory('Mobiles',this)">📱 Mobiles</div>
-<div class="category" onclick="chooseCategory('Clothes',this)">👕 Clothes</div>
-<div class="category" onclick="chooseCategory('Furniture',this)">🪑 Furniture</div>
-<div class="category" onclick="chooseCategory('Electronics',this)">💻 Electronics</div>
-<div class="category" onclick="chooseCategory('Bicycles',this)">🚲 Bicycles</div>
-<div class="category" onclick="chooseCategory('Home Items',this)">🏠 Home Items</div>
+  <div class="sectionhead">
+    <h2>Latest Products</h2>
+    <span id="count">Loading...</span>
+  </div>
+  <div id="status" class="status">Firebase से सामान लोड हो रहा है...</div>
+  <div class="products" id="products"></div>
+</main>
+
+<footer>© 2026 Jaipur Bazar | Buy • Sell • Connect</footer>
+
+<div class="modal" id="sellModal">
+  <div class="modalbox">
+    <button class="close" id="closeModal">✕</button>
+    <h2>अपना सामान बेचें</h2>
+    <form id="productForm">
+      <label>सामान का नाम</label>
+      <input id="title" required maxlength="70" placeholder="जैसे Samsung Mobile">
+      <label>कीमत (₹)</label>
+      <input id="price" type="number" min="1" required placeholder="जैसे 10000">
+      <label>Category</label>
+      <select id="category">
+        <option>Mobiles</option><option>Electronics</option>
+        <option>Vehicles</option><option>Furniture</option>
+        <option>Fashion</option><option>Property</option><option>Other</option>
+      </select>
+      <label>Photo URL</label>
+      <input id="imageUrl" type="url" placeholder="https://example.com/photo.jpg">
+      <label>विवरण</label>
+      <textarea id="description" required maxlength="1000" placeholder="सामान की जानकारी लिखें"></textarea>
+      <label>शहर / इलाका</label>
+      <input id="city" required value="Jaipur">
+      <label>WhatsApp नंबर</label>
+      <input id="phone" type="tel" required pattern="[0-9]{10}" placeholder="10 अंकों का मोबाइल नंबर">
+      <button type="submit" id="submitBtn">विज्ञापन पोस्ट करें</button>
+    </form>
+  </div>
 </div>
 
-<button class="sell" onclick="openForm()">+ SELL YOUR PRODUCT</button>
-
-<h2>Latest Products</h2>
-<div id="products" class="products"></div>
-
-</div>
-
-<footer>© 2026 Jaipur Bazar | Jaipur, Rajasthan</footer>
-
-<div class="modal" id="modal">
-<div class="modal-box">
-<button class="close" onclick="closeForm()">✕ Close</button>
-<h2>Sell Your Product</h2>
-
-<form id="productForm">
-<label>Product Name</label>
-<input id="pname" required placeholder="Example: Samsung Mobile">
-
-<label>Price (₹)</label>
-<input id="price" type="number" min="1" required placeholder="Enter price">
-
-<label>Category</label>
-<select id="category" required>
-<option value="">Select Category</option>
-<option>Mobiles</option>
-<option>Clothes</option>
-<option>Furniture</option>
-<option>Electronics</option>
-<option>Bicycles</option>
-<option>Home Items</option>
-<option>Other</option>
-</select>
-
-<label>Product Photo</label>
-<input id="photo" type="file" accept="image/*" required>
-
-<label>Product Description</label>
-<textarea id="description" rows="3" placeholder="Product details"></textarea>
-
-<label>Your Jaipur Location</label>
-<input id="location" required placeholder="Example: Mansarovar, Jaipur">
-
-<label>WhatsApp Number (10 digits)</label>
-<input id="phone" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required placeholder="10 digit mobile number">
-
-<button class="submit" type="submit">POST YOUR AD</button>
-</form>
-</div>
-</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyB4vgscQw8Rb-mHYtKWZlEcQHbN4Aa4Z6k",
+  authDomain: "jaipur-bazar.firebaseapp.com",
+  projectId: "jaipur-bazar",
+  storageBucket: "jaipur-bazar.firebasestorage.app",
+  messagingSenderId: "324048561647",
+  appId: "1:324048561647:web:ce91100eb859d16edbc21a",
+  measurementId: "G-M3M72HF0Q1"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+let currentUser = null;
+let allProducts = [];
 let selectedCategory = "All";
-let products = [];
 
-try {
- products = JSON.parse(localStorage.getItem("jaipurProducts")) || [];
-} catch(e) {
- products = [];
-}
+const $ = id => document.getElementById(id);
 
-function saveProducts(){
- try {
-  localStorage.setItem("jaipurProducts",JSON.stringify(products));
- } catch(e) {
-  alert("Storage full. Please use a smaller product photo.");
- }
-}
-
-function openForm(){
- document.getElementById("modal").style.display="block";
-}
-function closeForm(){
- document.getElementById("modal").style.display="none";
-}
-
-function chooseCategory(category,element){
- selectedCategory=category;
- document.querySelectorAll(".category").forEach(x=>x.classList.remove("active"));
- element.classList.add("active");
- renderProducts();
-}
-
-function safe(value){
- return String(value ?? "").replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
-}
-
-document.getElementById("productForm").addEventListener("submit",function(e){
- e.preventDefault();
-
- const file=document.getElementById("photo").files[0];
- if(!file) return alert("Please select a photo.");
- if(file.size>1500000) return alert("Photo should be smaller than 1.5 MB.");
-
- const reader=new FileReader();
- reader.onload=function(){
-  const product={
-   id:Date.now(),
-   name:document.getElementById("pname").value.trim(),
-   price:Number(document.getElementById("price").value),
-   category:document.getElementById("category").value,
-   photo:reader.result,
-   description:document.getElementById("description").value.trim(),
-   location:document.getElementById("location").value.trim(),
-   phone:document.getElementById("phone").value.trim()
-  };
-
-  products.unshift(product);
-  saveProducts();
-  renderProducts();
-  document.getElementById("productForm").reset();
-  closeForm();
-  alert("Your product ad has been posted!");
- };
- reader.readAsDataURL(file);
+auth.onAuthStateChanged(user => {
+  currentUser = user;
+  $("loginBtn").textContent = user ? "Logout" : "Google Login";
 });
 
-function renderProducts(){
- const search=document.getElementById("search").value.toLowerCase();
- const area=document.getElementById("products");
+$("loginBtn").onclick = async () => {
+  try {
+    if (currentUser) {
+      await auth.signOut();
+    } else {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      await auth.signInWithPopup(provider);
+    }
+  } catch (e) {
+    alert("Login में समस्या: " + e.message);
+  }
+};
 
- const filtered=products.filter(p=>
-  (selectedCategory==="All" || p.category===selectedCategory) &&
-  (p.name+" "+p.category+" "+p.location).toLowerCase().includes(search)
- );
+$("sellBtn").onclick = () => {
+  if (!currentUser) {
+    alert("पहले Google Login करें।");
+    return;
+  }
+  $("sellModal").style.display = "block";
+};
 
- if(filtered.length===0){
-  area.innerHTML='<div class="empty">No products found. Be the first to sell! 😊</div>';
-  return;
- }
+$("closeModal").onclick = () => $("sellModal").style.display = "none";
 
- area.innerHTML=filtered.map(p=>`
-  <div class="card">
-   <img src="${p.photo}" alt="${safe(p.name)}">
-   <div class="details">
-    <div class="price">₹${Number(p.price).toLocaleString("en-IN")}</div>
-    <div class="name">${safe(p.name)}</div>
-    <div>${safe(p.category)}</div>
-    <div class="location">📍 ${safe(p.location)}</div>
-    <a class="contact" target="_blank" rel="noopener"
-     href="https://wa.me/91${safe(p.phone)}?text=${encodeURIComponent("Namaste, I am interested in "+p.name)}">
-     WhatsApp Seller
-    </a>
-    <button class="delete" onclick="deleteProduct(${Number(p.id)})">Delete Ad</button>
-   </div>
-  </div>
- `).join("");
+$("productForm").onsubmit = async e => {
+  e.preventDefault();
+  if (!currentUser) {
+    alert("पहले Login करें");
+    return;
+  }
+
+  const title = $("title").value.trim();
+  const price = Number($("price").value);
+  const phone = $("phone").value.trim();
+  const imageUrl = $("imageUrl").value.trim();
+
+  if (!title || price <= 0 || !/^[0-9]{10}$/.test(phone)) {
+    alert("नाम, सही कीमत और 10 अंकों का नंबर भरें।");
+    return;
+  }
+
+  $("submitBtn").disabled = true;
+  $("submitBtn").textContent = "Posting...";
+
+  try {
+    await db.collection("products").add({
+      title,
+      price,
+      category: $("category").value,
+      imageUrl,
+      description: $("description").value.trim(),
+      city: $("city").value.trim(),
+      phone,
+      sellerId: currentUser.uid,
+      sellerName: currentUser.displayName || "Seller",
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    $("productForm").reset();
+    $("city").value = "Jaipur";
+    $("sellModal").style.display = "none";
+    alert("आपका विज्ञापन पोस्ट हो गया!");
+  } catch (err) {
+    alert("विज्ञापन पोस्ट नहीं हुआ: " + err.message);
+  } finally {
+    $("submitBtn").disabled = false;
+    $("submitBtn").textContent = "विज्ञापन पोस्ट करें";
+  }
+};
+
+function renderProducts() {
+  const q = $("search").value.toLowerCase().trim();
+  const list = allProducts.filter(p => {
+    const text = [p.title,p.category,p.city,p.description].join(" ").toLowerCase();
+    return (selectedCategory === "All" || p.category === selectedCategory) && text.includes(q);
+  });
+
+  $("count").textContent = list.length + " Ads";
+  $("status").style.display = list.length ? "none" : "block";
+  $("status").textContent = "अभी कोई विज्ञापन नहीं मिला। पहला विज्ञापन आप पोस्ट करें!";
+
+  $("products").innerHTML = "";
+  list.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const img = document.createElement("img");
+    img.src = p.imageUrl || "https://placehold.co/400x300?text=Jaipur+Bazar";
+    img.alt = p.title || "Product";
+    img.onerror = () => { img.src = "https://placehold.co/400x300?text=No+Photo"; };
+
+    const body = document.createElement("div");
+    body.className = "cardbody";
+
+    const title = document.createElement("h3");
+    title.textContent = p.title || "Product";
+
+    const price = document.createElement("div");
+    price.className = "price";
+    price.textContent = "₹" + Number(p.price || 0).toLocaleString("en-IN");
+
+    const detail = document.createElement("p");
+    detail.textContent = p.category + " • " + (p.city || "Jaipur");
+
+    const desc = document.createElement("p");
+    desc.textContent = p.description || "";
+
+    const contact = document.createElement("a");
+    contact.href = "https://wa.me/91" + String(p.phone || "").replace(/\D/g,"");
+    contact.target = "_blank";
+    contact.rel = "noopener";
+    contact.textContent = "WhatsApp Seller";
+    contact.style.cssText = "display:inline-block;margin-top:8px;color:#087e75;font-weight:bold";
+
+    body.append(title,price,detail,desc,contact);
+
+    if (currentUser && currentUser.uid === p.sellerId) {
+      const del = document.createElement("button");
+      del.textContent = "Delete Ad";
+      del.style.background = "#b52b35";
+      del.onclick = async () => {
+        if (confirm("क्या आप यह विज्ञापन हटाना चाहते हैं?")) {
+          try {
+            await db.collection("products").doc(p.id).delete();
+          } catch (e) {
+            alert("Delete नहीं हुआ: " + e.message);
+          }
+        }
+      };
+      body.appendChild(del);
+    }
+
+    card.append(img,body);
+    $("products").appendChild(card);
+  });
 }
 
-function deleteProduct(id){
- if(confirm("Are you sure you want to delete this ad?")){
-  products=products.filter(p=>p.id!==id);
-  saveProducts();
+db.collection("products").orderBy("createdAt","desc").onSnapshot(snapshot => {
+  allProducts = snapshot.docs.map(doc => ({id:doc.id,...doc.data()}));
   renderProducts();
- }
-}
+}, error => {
+  $("status").textContent = "Database Error: " + error.message;
+});
 
-renderProducts();
+$("search").addEventListener("input",renderProducts);
+
+$("categories").addEventListener("click",e => {
+  if (e.target.tagName !== "BUTTON") return;
+  selectedCategory = e.target.dataset.cat;
+  document.querySelectorAll("#categories button").forEach(b => b.classList.toggle("active",b === e.target));
+  renderProducts();
+});
 </script>
 </body>
 </html>
